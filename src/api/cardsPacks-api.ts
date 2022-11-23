@@ -41,7 +41,7 @@ export type CardPacksType = {
 }
 
 export type ResponseCardsPacksType = {
-  cardsPacks: CardPacksType[];
+  cardPacks: CardPacksType[];
   page: number;
   pageCount: number;
   cardPacksTotalCount: number;

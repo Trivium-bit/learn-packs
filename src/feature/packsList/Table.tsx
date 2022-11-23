@@ -6,8 +6,11 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import { useAppDispatch, useAppSelector } from 'redux/store';
+import { getCardsPacksTC, setCurrentPageAC } from 'redux/packs-reducer';
+import { useEffect } from 'react';
 
-function createData(
+/* function createData(
   name: string,
   cards: number,
   lastUpdated: number,
@@ -23,10 +26,21 @@ const rows = [
   createData('Eclair', 262, 16.0, 24, 6.0),
   createData('Cupcake', 305, 3.7, 67, 4.3),
   createData('Gingerbread', 356, 16.0, 49, 3.9),
-];
+]; */
 
 export default function TablePacks() {
+  debugger
+
+const dispatch = useAppDispatch();
+const cardPacks = useAppSelector((state) => state.packs.cardPacks)
+
+useEffect(() => {
+  dispatch(setCurrentPageAC(1))
+  dispatch(setCardsPacksTC());
+}, [cardPacks]);
+
   return (
+    
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
@@ -39,16 +53,16 @@ export default function TablePacks() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
+          {cardPacks.map((cardPack) => (
             <TableRow
-              key={row.name}
+              key={cardPack._id}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
-              <TableCell component="th" scope="row">{row.name}</TableCell>
-              <TableCell align="right">{row.cards}</TableCell>
-              <TableCell align="right">{row.lastUpdated}</TableCell>
-              <TableCell align="right">{row.createdBy}</TableCell>
-              <TableCell align="right">{row.actions}</TableCell>
+              <TableCell component="th" scope="row">{cardPack.name}</TableCell>
+              <TableCell align="right">{cardPack.name}</TableCell>
+              <TableCell align="right">{cardPack.created}</TableCell>
+              <TableCell align="right">{cardPack.name}</TableCell>
+              <TableCell align="right">{cardPack.cardsCount}</TableCell>
             </TableRow>
           ))}
         </TableBody>

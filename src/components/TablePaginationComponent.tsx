@@ -3,9 +3,9 @@ import TablePagination from "@mui/material/TablePagination";
 import Pagination from "@mui/material/Pagination";
 
 export const TablePaginationComponent = () => {
-  const [page, setPage] = React.useState(2);
+  
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
-
+/* 
   const handleChangePage = (
     event: React.MouseEvent<HTMLButtonElement> | null,
     newPage: number
@@ -18,11 +18,11 @@ export const TablePaginationComponent = () => {
   ) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
-  };
+  }; */
 
   return (
-    <div style={{ display: "flex", width: "100%", margin: "10px auto" }}>
-      <Pagination
+    <div style={{ display: "flex", width: "100%", margin: "10px /*  */auto" }}>
+    {/*   <Pagination
         color={"primary"}
         count={10}
         variant="outlined"
@@ -38,7 +38,7 @@ export const TablePaginationComponent = () => {
         onPageChange={handleChangePage}
         rowsPerPage={rowsPerPage}
         onRowsPerPageChange={handleChangeRowsPerPage}
-      />
+      /> */}
     </div>
   );
 };
