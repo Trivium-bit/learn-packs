@@ -1,5 +1,5 @@
 import { Dispatch } from 'redux'
-import { authApi } from 'api/api'
+import { authApi } from 'api/auth-api'
 import { setIsLogin, setProfileData } from './auth-reducer'
 
 export enum RequestStatus {

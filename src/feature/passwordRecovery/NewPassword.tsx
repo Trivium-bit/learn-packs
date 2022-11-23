@@ -6,7 +6,7 @@ import { useFormik } from "formik";
 import { setNewPassTC } from "redux/auth-reducer";
 import { useAppDispatch, useAppSelector } from "redux/store";
 import { useNavigate, useParams } from "react-router-dom";
-import { SetNewPasswordType } from "api/api";
+import { SetNewPasswordType } from "api/auth-api";
 
 export type FormikErrorType = {
   password?: string;

@@ -4,7 +4,7 @@ import {
   LoginDataType,
   ProfileDataType,
   SetNewPasswordType,
-} from "api/api";
+} from "api/auth-api";
 import { RequestStatus, setError, setInfo, setLoading } from "./app-reducer";
 import { Dispatch } from "redux";
 import { RecoveryEmailType } from "feature/passwordRecovery/PasswordRecovery";

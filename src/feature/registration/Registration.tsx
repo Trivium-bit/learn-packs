@@ -20,7 +20,7 @@ import {
 } from "redux/store";
 import { RequestStatus } from "redux/app-reducer";
 import { Link, Navigate } from "react-router-dom";
-import { DataFormType } from "api/api";
+import { DataFormType } from "api/auth-api";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";

@@ -9,12 +9,12 @@ import Paper from '@mui/material/Paper';
 
 function createData(
   name: string,
-  calories: number,
-  fat: number,
-  carbs: number,
-  protein: number,
+  cards: number,
+  lastUpdated: number,
+  createdBy: number,
+  actions: number,
 ) {
-  return { name, calories, fat, carbs, protein };
+  return { name, cards, lastUpdated, createdBy, actions };
 }
 
 const rows = [
@@ -33,7 +33,7 @@ export default function TablePacks() {
           <TableRow>
             <TableCell>Name</TableCell>
             <TableCell align="right">Cards</TableCell>
-            <TableCell align="right">Last Updated</TableCell>
+            <TableCell align="right">Date Of Creation</TableCell>
             <TableCell align="right">Created by</TableCell>
             <TableCell align="right">Actions</TableCell>
           </TableRow>
@@ -44,13 +44,11 @@ export default function TablePacks() {
               key={row.name}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
-              <TableCell component="th" scope="row">
-                {row.name}
-              </TableCell>
-              <TableCell align="right">{row.calories}</TableCell>
-              <TableCell align="right">{row.fat}</TableCell>
-              <TableCell align="right">{row.carbs}</TableCell>
-              <TableCell align="right">{row.protein}</TableCell>
+              <TableCell component="th" scope="row">{row.name}</TableCell>
+              <TableCell align="right">{row.cards}</TableCell>
+              <TableCell align="right">{row.lastUpdated}</TableCell>
+              <TableCell align="right">{row.createdBy}</TableCell>
+              <TableCell align="right">{row.actions}</TableCell>
             </TableRow>
           ))}
         </TableBody>
