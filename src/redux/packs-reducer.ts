@@ -5,7 +5,7 @@ import { AppRootReducerType } from "./store";
 
 
 type CardsPacksActionsType =
-  | ReturnType<typeof getCardsPacksAC>
+  | ReturnType<typeof setCardsPacksAC>
   | ReturnType<typeof setCurrentPageAC>
 
   const initialState = {
