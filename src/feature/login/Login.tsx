@@ -57,7 +57,7 @@ export const Login = () => {
     },
   });
   if (isLogin) {
-    return <Navigate to={"/profile"} />;
+    return <Navigate to={"/packslist"} />;
   }
   return (
     <>

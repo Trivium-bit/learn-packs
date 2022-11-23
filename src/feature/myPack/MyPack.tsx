@@ -8,7 +8,6 @@ import Box from '@mui/material/Box'
 import { BackToPacksListButton } from 'components/BackToPacksListButton'
 import { BlueButton } from 'components/BlueButton'
 import { InputSearch } from 'components/InputSearch'
-import { TablePaginationComponent } from 'components/TablePaginationComponent'
 import { PackTable, PackType } from './PackTable'
 
 const packs: PackType[] = [
@@ -60,8 +59,6 @@ export const MyPack: React.FC = () => {
                 </Box>
                 <InputSearch width={'100%'} />
                 <PackTable rows={rows} />
-
-                <TablePaginationComponent />
             </Stack>
         </Container>
     )
