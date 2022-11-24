@@ -10,6 +10,7 @@ import { appReducer } from "./app-reducer";
 import { authReducer } from "./auth-reducer";
 import { packsReducer } from "./packs-reducer";
 
+
 const rootReducer = combineReducers({
   store: storeReducer,
   app: appReducer,

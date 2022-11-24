@@ -1,14 +1,14 @@
-import { CardPacksType, cardsPacksApi } from "api/cardsPacks-api";
-import { Dispatch } from "redux";
+import { CardPackRequestType, CardPacksType, cardsPacksApi } from "api/cardsPacks-api";
 import { RequestStatus, setError, setLoading } from "./app-reducer";
-import { AppRootReducerType } from "./store";
+import { AppDispatch, AppRootReducerType } from "./store";
 
 
 type CardsPacksActionsType =
-  | ReturnType<typeof setCardsPacksAC>
+  | ReturnType<typeof getCardsPacksAC>
   | ReturnType<typeof setCurrentPageAC>
+  | ReturnType<typeof addCardsPackAC>
 
-  const initialState = {
+const initialState = {
   cardPacks: [] as Array<CardPacksType>,
   packName: '',
   min: 0,
@@ -36,27 +36,43 @@ export const packsReducer = (
     }
     case "SET_CURRENT_PAGE":
       return { ...state, page: action.page }
+    case "ADD_CARDS_PACK":
+      return { ...state, cardPacks: [action.pack, ...state.cardPacks] }
     default: {
       return state;
     }
   }
 };
 
-export const setCardsPacksAC = (cardPacks: CardPacksType[], cardPacksTotalCount: number, page: number) => ({
+export const getCardsPacksAC = (cardPacks: CardPacksType[], cardPacksTotalCount: number, page: number) => ({
   type: "GET_CARDS_PACKS", cardPacks, cardPacksTotalCount, page
 } as const);
 export const setCurrentPageAC = (page: number) => ({
   type: "SET_CURRENT_PAGE", page
 } as const);
+export const addCardsPackAC = (pack: CardPacksType ) => ({
+  type: "ADD_CARDS_PACK", pack
+} as const);
 
 
-export const setCardsPacksTC = () => async (dispatch: Dispatch, getState: () => AppRootReducerType) => {
+export const getCardsPacksTC = () => async (dispatch: AppDispatch, getState: () => AppRootReducerType) => {
   const { pageCount, packName, min, max, sortPacks, page } = getState().packs;
   try {
     dispatch(setLoading(RequestStatus.loading));
     const res = await cardsPacksApi.getCardsPacks({ pageCount, packName, min, max, sortPacks, page });
     const currentPagesCount = Math.ceil(res.data.cardPacksTotalCount / res.data.pageCount)
-    dispatch(setCardsPacksAC(res.data.cardPacks, currentPagesCount, res.data.page));
+    dispatch(getCardsPacksAC(res.data.cardPacks, currentPagesCount, res.data.page));
+    dispatch(setLoading(RequestStatus.succeeded));
+  } catch (e) {
+    dispatch(setError(e as string));
+    dispatch(setLoading(RequestStatus.error));
+  }
+};
+export const addCardsPacksTC = (pack: CardPackRequestType) => async (dispatch: AppDispatch) => {
+  try {
+    dispatch(setLoading(RequestStatus.loading));
+    await cardsPacksApi.addCardsPack(pack);
+    dispatch(getCardsPacksTC());
     dispatch(setLoading(RequestStatus.succeeded));
   } catch (e) {
     dispatch(setError(e as string));

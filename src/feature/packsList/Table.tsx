@@ -7,7 +7,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { useAppDispatch, useAppSelector } from 'redux/store';
-import { setCardsPacksTC, setCurrentPageAC } from 'redux/packs-reducer';
+import { getCardsPacksTC } from 'redux/packs-reducer';
 import { useEffect } from 'react';
 
 export default function TablePacks() {
@@ -16,7 +16,7 @@ const dispatch = useAppDispatch();
 const cardPacks = useAppSelector((state) => state.packs.cardPacks)
 
 useEffect(() => {
-  dispatch(setCardsPacksTC());
+  dispatch(getCardsPacksTC());
 }, []);
 
   return (
@@ -24,7 +24,7 @@ useEffect(() => {
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
-          <TableRow>
+          <TableRow  sx={{ backgroundColor: '#c3ddf7'}} aria-label="simple table">
             <TableCell>Name</TableCell>
             <TableCell align="right">Cards</TableCell>
             <TableCell align="right">Date Of Creation</TableCell>
@@ -33,6 +33,7 @@ useEffect(() => {
           </TableRow>
         </TableHead>
         <TableBody>
+
           {cardPacks.map((cardPack) => (
             <TableRow
               key={cardPack._id}
