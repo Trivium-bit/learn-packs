@@ -16,7 +16,10 @@ export const cardsPacksApi = {
   },
   addCardsPack(pack: CardPackRequestType) {
     return instance.post<ResponseCardsPacksType>(`/cards/pack`, {cardsPack: pack});
-  }
+  },
+  deleteCardsPack(_id: string | undefined) {
+    return instance.delete<ResponseCardsPacksType>(`/cards/pack?id=${_id}`);
+  },
 }
 
 
@@ -27,7 +30,7 @@ export const cardsPacksApi = {
 //==TYPES=========================================================================================
 
 export type CardPacksType = {
-    _id?: string;
+    _id?: string | undefined;
     user_id?: string;
     user_name?: string;
     private?: boolean;

@@ -50,7 +50,7 @@ export const getCardsPacksAC = (cardPacks: CardPacksType[], cardPacksTotalCount:
 export const setCurrentPageAC = (page: number) => ({
   type: "SET_CURRENT_PAGE", page
 } as const);
-export const addCardsPackAC = (pack: CardPacksType ) => ({
+export const addCardsPackAC = (pack: CardPacksType) => ({
   type: "ADD_CARDS_PACK", pack
 } as const);
 
@@ -72,6 +72,17 @@ export const addCardsPacksTC = (pack: CardPackRequestType) => async (dispatch: A
   try {
     dispatch(setLoading(RequestStatus.loading));
     await cardsPacksApi.addCardsPack(pack);
+    dispatch(getCardsPacksTC());
+    dispatch(setLoading(RequestStatus.succeeded));
+  } catch (e) {
+    dispatch(setError(e as string));
+    dispatch(setLoading(RequestStatus.error));
+  }
+};
+export const deleteCardsPacksTC = (_id: string | undefined) => async (dispatch: AppDispatch) => {
+  try {
+    dispatch(setLoading(RequestStatus.loading));
+    await cardsPacksApi.deleteCardsPack(_id);
     dispatch(getCardsPacksTC());
     dispatch(setLoading(RequestStatus.succeeded));
   } catch (e) {

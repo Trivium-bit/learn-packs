@@ -1,6 +1,7 @@
 import { Box, Button, Pagination, Stack, TextField } from '@mui/material'
 import React, { ChangeEvent, useState } from 'react'
-import { addCardsPacksTC, getCardsPacksTC, setCurrentPageAC } from 'redux/packs-reducer';
+import { useParams } from 'react-router-dom';
+import { addCardsPacksTC, deleteCardsPacksTC, getCardsPacksTC, setCurrentPageAC } from 'redux/packs-reducer';
 import { useAppDispatch, useAppSelector } from 'redux/store';
 import TablePacks from './Table'
 
@@ -20,10 +21,8 @@ export const PacksList: React.FC = () => {
         setNewPackName(event.target.value);
     };
     const handleAddNewCardsPack = () => {
-        debugger
         dispatch(addCardsPacksTC({ name: newPackName }))
     }
-
 
     return (
         <Box sx={{
@@ -35,23 +34,25 @@ export const PacksList: React.FC = () => {
             ml: "120px"
         }}>
             <Box
-            sx={{
-                display: "flex",
-                flexDirection: 'column',
-                width: '600px',
-                pb: "10px"
-            }}>
-            <TextField
-                value={newPackName}
-                placeholder={"Enter a new name of card Pack"}
-                onChange={handleChangeNewPack}
-            />
-            <Button
-             sx={{
-                width: '200px',
-                mt: "10px"
-            }}
-            variant="contained" onClick={handleAddNewCardsPack}>add Pack</Button>
+                sx={{
+                    display: "flex",
+                    flexDirection: 'column',
+                    width: '600px',
+                    pb: "10px"
+                }}>
+                <TextField
+                    value={newPackName}
+                    placeholder={"Enter a new name of card Pack"}
+                    onChange={handleChangeNewPack}
+                />
+                <Button
+                    sx={{
+                        width: '200px',
+                        mt: "10px"
+                    }}
+                    variant="contained" onClick={handleAddNewCardsPack}>
+                    add Pack
+                </Button>
             </Box>
             <TablePacks />
             <Stack spacing={2}
