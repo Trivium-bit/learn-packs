@@ -7,6 +7,7 @@ type CardsPacksActionsType =
   | ReturnType<typeof getCardsPacksAC>
   | ReturnType<typeof setCurrentPageAC>
   | ReturnType<typeof addCardsPackAC>
+  | ReturnType<typeof changeNameCardsPackAC>
 
 const initialState = {
   cardPacks: [] as Array<CardPacksType>,
@@ -38,6 +39,8 @@ export const packsReducer = (
       return { ...state, page: action.page }
     case "ADD_CARDS_PACK":
       return { ...state, cardPacks: [action.pack, ...state.cardPacks] }
+    case "CHANGE_NAME_CARDS_PACK":
+      return {...state, packName: action.newPackName}
     default: {
       return state;
     }
@@ -52,6 +55,9 @@ export const setCurrentPageAC = (page: number) => ({
 } as const);
 export const addCardsPackAC = (pack: CardPacksType) => ({
   type: "ADD_CARDS_PACK", pack
+} as const);
+export const changeNameCardsPackAC = (newPackName: string) => ({
+  type: "CHANGE_NAME_CARDS_PACK", newPackName
 } as const);
 
 
@@ -68,7 +74,7 @@ export const getCardsPacksTC = () => async (dispatch: AppDispatch, getState: () 
     dispatch(setLoading(RequestStatus.error));
   }
 };
-export const addCardsPacksTC = (pack: CardPackRequestType) => async (dispatch: AppDispatch) => {
+export const addCardsPackTC = (pack: CardPackRequestType) => async (dispatch: AppDispatch) => {
   try {
     dispatch(setLoading(RequestStatus.loading));
     await cardsPacksApi.addCardsPack(pack);
@@ -79,11 +85,22 @@ export const addCardsPacksTC = (pack: CardPackRequestType) => async (dispatch: A
     dispatch(setLoading(RequestStatus.error));
   }
 };
-export const deleteCardsPacksTC = (_id: string | undefined) => async (dispatch: AppDispatch) => {
+export const deleteCardsPackTC = (_id: string) => async (dispatch: AppDispatch) => {
   try {
     dispatch(setLoading(RequestStatus.loading));
     await cardsPacksApi.deleteCardsPack(_id);
     dispatch(getCardsPacksTC());
+    dispatch(setLoading(RequestStatus.succeeded));
+  } catch (e) {
+    dispatch(setError(e as string));
+    dispatch(setLoading(RequestStatus.error));
+  }
+};
+export const changeNameCardsPackTC = (_id: string, name: string) => async (dispatch: AppDispatch) => {
+  try {
+    dispatch(setLoading(RequestStatus.loading));
+    await cardsPacksApi.changeNameCardsPack(_id, name);
+    dispatch(changeNameCardsPackAC(name));
     dispatch(setLoading(RequestStatus.succeeded));
   } catch (e) {
     dispatch(setError(e as string));

@@ -1,7 +1,6 @@
 import { Box, Button, Pagination, Stack, TextField } from '@mui/material'
 import React, { ChangeEvent, useState } from 'react'
-import { useParams } from 'react-router-dom';
-import { addCardsPacksTC, deleteCardsPacksTC, getCardsPacksTC, setCurrentPageAC } from 'redux/packs-reducer';
+import { addCardsPackTC, changeNameCardsPackTC, getCardsPacksTC, setCurrentPageAC } from 'redux/packs-reducer';
 import { useAppDispatch, useAppSelector } from 'redux/store';
 import TablePacks from './Table'
 
@@ -21,8 +20,9 @@ export const PacksList: React.FC = () => {
         setNewPackName(event.target.value);
     };
     const handleAddNewCardsPack = () => {
-        dispatch(addCardsPacksTC({ name: newPackName }))
+        dispatch(addCardsPackTC({ name: newPackName }))
     }
+
 
     return (
         <Box sx={{

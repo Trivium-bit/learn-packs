@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -10,10 +10,12 @@ import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'
 import ModeEditIcon from '@mui/icons-material/ModeEdit'
 import SchoolOutlinedIcon from '@mui/icons-material/SchoolOutlined'
 import { useAppDispatch, useAppSelector } from 'redux/store';
-import { deleteCardsPacksTC, getCardsPacksTC } from 'redux/packs-reducer';
+import { deleteCardsPackTC, getCardsPacksTC, changeNameCardsPackTC } from 'redux/packs-reducer';
 import { useEffect } from 'react';
 
 export default function TablePacks() {
+
+  const [newPackName, setNewPackName] = useState('');
 
   const hoverStyleIcon = {
     transition: '0.5s',
@@ -28,11 +30,14 @@ export default function TablePacks() {
     dispatch(getCardsPacksTC());
   }, []);
 
-
-  const onClickDeletePackHandler = (_id: string | undefined) => {
-    dispatch(deleteCardsPacksTC(_id))
-
+  const onClickDeletePackHandler = (_id: string) => {
+    dispatch(deleteCardsPackTC(_id))
   }
+
+  const handleChangeNamePack = (event: ChangeEvent<HTMLTextAreaElement>, _id: string) => {
+    setNewPackName(event.target.value);
+    dispatch(changeNameCardsPackTC({ name: newPackName }))
+  };
 
   const rows = cardPacks.map((pack) => {
     return {
@@ -53,6 +58,7 @@ export default function TablePacks() {
         {
           icon: (
             <ModeEditIcon
+              onClick={() => handleChangeNamePack(pack._id)}
               sx={hoverStyleIcon}
             />
           ),
@@ -60,7 +66,7 @@ export default function TablePacks() {
         {
           icon: (
             <DeleteOutlineIcon
-               onClick={() => onClickDeletePackHandler(pack._id)}
+              onClick={() => onClickDeletePackHandler(pack._id)}
               sx={hoverStyleIcon}
             />
           ),
