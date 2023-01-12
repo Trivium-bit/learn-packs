@@ -84,7 +84,6 @@ export default function TablePacks() {
 
   return (
     <>
-     
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
@@ -115,29 +114,33 @@ export default function TablePacks() {
                     )
                   })}
                 </TableCell>
+                <Modal active={modalActive} setActive={setModalActive}>
+                  <div>
+                    <TextField
+                     sx={{
+                      width: '400px',
+                      mt: "50px"
+                    }}
+                      size="small"
+                      value={newPackName}
+                      placeholder={"Enter a new name of card Pack"}
+                      onChange={handleChangeNewPack}
+                    />
+                  </div>
+                  <div>
+                    <Button
+                      sx={{
+                        width: '200px',
+                        mb: "20px"
+                      }}
+                      variant="contained" onClick={() => (onClickChangePackName(row.key))}>
+                      change Name Pack
+                    </Button>
+                  </div>
+                </Modal>
               </TableRow>
             ))}
           </TableBody>
-          <Modal active={modalActive} setActive={setModalActive}>
-        <div>
-          <TextField
-            size="small"
-            value={newPackName}
-            placeholder={"Enter a new name of card Pack"}
-            onChange={handleChangeNewPack}
-          />
-        </div>
-        <div>
-          <Button
-            sx={{
-              width: '400px',
-              mt: "250px"
-            }}
-            variant="contained" onClick={() => (onClickChangePackName(_id))}>
-            change Name Pack
-          </Button>
-        </div>
-      </Modal>
         </Table>
       </TableContainer>
     </>

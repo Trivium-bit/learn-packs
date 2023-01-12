@@ -1,5 +1,4 @@
-import { GetCardsPacksType } from 'api/cardsPacks-api'
-import { ReactComponentElement, ReactNode } from 'react'
+import { ReactNode } from 'react'
 import style from './Modal.module.css'
 
 type ModalPropsType = {
