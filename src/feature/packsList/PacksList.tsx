@@ -1,28 +1,12 @@
-import { Box, Button, Pagination, Stack, TextField } from '@mui/material'
+import { Box, Button, Stack, TextField } from '@mui/material'
 import React, { ChangeEvent, useState } from 'react'
-import { addCardsPackTC, changeNameCardsPackTC, getCardsPacksTC, setCurrentPageAC } from 'redux/packs-reducer';
-import { useAppDispatch, useAppSelector } from 'redux/store';
-import TablePacks from './Table'
+import { addCardsPackTC} from 'redux/packs-reducer';
+import { useAppDispatch} from 'redux/store';
+import { AddPack } from './AddPack';
+import { PaginationComponent } from './PaginationComponent';
+import TablePacks from './TablePacks'
 
 export const PacksList: React.FC = () => {
-
-    const [newPackName, setNewPackName] = useState('');
-
-    const dispatch = useAppDispatch();
-    const totalCardPacksPageCount = useAppSelector((state) => state.packs.cardPacksTotalCount)
-    const currentPage = useAppSelector((state) => state.packs.page)
-
-    const handleChangePagination = (event: React.ChangeEvent<unknown>, page: number) => {
-        dispatch(setCurrentPageAC(page))
-        dispatch(getCardsPacksTC())
-    }
-    const handleChangeNewPack = (event: ChangeEvent<HTMLTextAreaElement>) => {
-        setNewPackName(event.target.value);
-    };
-    const handleAddNewCardsPack = () => {
-        dispatch(addCardsPackTC({ name: newPackName }))
-    }
-
 
     return (
         <Box sx={{
@@ -33,33 +17,13 @@ export const PacksList: React.FC = () => {
             mt: "60px",
             ml: "120px"
         }}>
-            <Box
-                sx={{
-                    display: "flex",
-                    flexDirection: 'column',
-                    width: '600px',
-                    pb: "10px"
-                }}>
-                <TextField
-                    value={newPackName}
-                    placeholder={"Enter a new name of card Pack"}
-                    onChange={handleChangeNewPack}
-                />
-                <Button
-                    sx={{
-                        width: '200px',
-                        mt: "10px"
-                    }}
-                    variant="contained" onClick={handleAddNewCardsPack}>
-                    add Pack
-                </Button>
-            </Box>
+            <AddPack />
             <TablePacks />
             <Stack spacing={2}
                 sx={{
                     mt: "60px",
                 }}>
-                <Pagination variant="outlined" shape="rounded" count={totalCardPacksPageCount} onChange={handleChangePagination} page={currentPage} />
+                <PaginationComponent />
             </Stack>
         </Box>
     )

@@ -15,8 +15,6 @@ import { useEffect } from 'react';
 
 export default function TablePacks() {
 
-  const [newPackName, setNewPackName] = useState('');
-
   const hoverStyleIcon = {
     transition: '0.5s',
     cursor: 'pointer',
@@ -35,8 +33,8 @@ export default function TablePacks() {
   }
 
   const handleChangeNamePack = (event: ChangeEvent<HTMLTextAreaElement>, _id: string) => {
-    setNewPackName(event.target.value);
-    dispatch(changeNameCardsPackTC({ name: newPackName }))
+    //setNewPackName(event.target.value);
+    //dispatch(changeNameCardsPackTC({ name: newPackName }))
   };
 
   const rows = cardPacks.map((pack) => {
@@ -58,7 +56,7 @@ export default function TablePacks() {
         {
           icon: (
             <ModeEditIcon
-              onClick={() => handleChangeNamePack(pack._id)}
+              onClick={() => {}}
               sx={hoverStyleIcon}
             />
           ),
