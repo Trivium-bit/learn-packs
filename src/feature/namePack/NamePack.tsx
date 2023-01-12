@@ -5,9 +5,6 @@ import { BackToPacksListButton } from 'components/BackToPacksListButton'
 import { createTheme, ThemeProvider, Typography } from '@mui/material'
 import { BlueButton } from 'components/BlueButton'
 
-
-
-
 export const NamePack: React.FC = () => {
 
     const theme = createTheme({

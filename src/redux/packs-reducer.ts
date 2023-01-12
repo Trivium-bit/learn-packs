@@ -96,11 +96,11 @@ export const deleteCardsPackTC = (_id: string) => async (dispatch: AppDispatch) 
     dispatch(setLoading(RequestStatus.error));
   }
 };
-export const changeNameCardsPackTC = (_id: string, name: string) => async (dispatch: AppDispatch) => {
+export const changeNameCardsPackTC = (_id: string, newPackName: string) => async (dispatch: AppDispatch) => {
   try {
     dispatch(setLoading(RequestStatus.loading));
-    await cardsPacksApi.changeNameCardsPack(_id, name);
-    dispatch(changeNameCardsPackAC(name));
+    await cardsPacksApi.changeNameCardsPack(_id, newPackName);
+    dispatch(changeNameCardsPackAC(newPackName));
     dispatch(setLoading(RequestStatus.succeeded));
   } catch (e) {
     dispatch(setError(e as string));

@@ -12,8 +12,14 @@ import SchoolOutlinedIcon from '@mui/icons-material/SchoolOutlined'
 import { useAppDispatch, useAppSelector } from 'redux/store';
 import { deleteCardsPackTC, getCardsPacksTC, changeNameCardsPackTC } from 'redux/packs-reducer';
 import { useEffect } from 'react';
+import Modal from 'components/Modal/Modal';
+import { Button, TextField } from '@mui/material';
 
 export default function TablePacks() {
+
+  const [modalActive, setModalActive] = useState<boolean>(false);
+  const [newPackName, setNewPackName] = useState('');
+  const cardPacks = useAppSelector((state) => state.packs.cardPacks)
 
   const hoverStyleIcon = {
     transition: '0.5s',
@@ -22,7 +28,6 @@ export default function TablePacks() {
   }
 
   const dispatch = useAppDispatch();
-  const cardPacks = useAppSelector((state) => state.packs.cardPacks)
 
   useEffect(() => {
     dispatch(getCardsPacksTC());
@@ -32,9 +37,12 @@ export default function TablePacks() {
     dispatch(deleteCardsPackTC(_id))
   }
 
-  const handleChangeNamePack = (event: ChangeEvent<HTMLTextAreaElement>, _id: string) => {
-    //setNewPackName(event.target.value);
-    //dispatch(changeNameCardsPackTC({ name: newPackName }))
+  const handleChangeNewPack = (event: ChangeEvent<HTMLTextAreaElement>) => {
+    setNewPackName(event.target.value);
+  };
+  const onClickChangePackName = (_id: string) => {
+    dispatch(changeNameCardsPackTC(_id, newPackName))
+    setModalActive(false)
   };
 
   const rows = cardPacks.map((pack) => {
@@ -56,7 +64,7 @@ export default function TablePacks() {
         {
           icon: (
             <ModeEditIcon
-              onClick={() => {}}
+              onClick={() => { setModalActive(true) }}
               sx={hoverStyleIcon}
             />
           ),
@@ -70,11 +78,13 @@ export default function TablePacks() {
           ),
         },
       ],
+
     }
   })
 
   return (
     <>
+     
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
@@ -87,7 +97,6 @@ export default function TablePacks() {
             </TableRow>
           </TableHead>
           <TableBody>
-
             {rows.map((row) => (
               <TableRow
                 key={row.key}
@@ -105,11 +114,30 @@ export default function TablePacks() {
                       </span>
                     )
                   })}
-
                 </TableCell>
               </TableRow>
             ))}
           </TableBody>
+          <Modal active={modalActive} setActive={setModalActive}>
+        <div>
+          <TextField
+            size="small"
+            value={newPackName}
+            placeholder={"Enter a new name of card Pack"}
+            onChange={handleChangeNewPack}
+          />
+        </div>
+        <div>
+          <Button
+            sx={{
+              width: '400px',
+              mt: "250px"
+            }}
+            variant="contained" onClick={() => (onClickChangePackName(_id))}>
+            change Name Pack
+          </Button>
+        </div>
+      </Modal>
         </Table>
       </TableContainer>
     </>

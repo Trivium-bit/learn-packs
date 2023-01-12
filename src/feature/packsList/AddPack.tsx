@@ -6,15 +6,15 @@ import { useAppDispatch } from "redux/store";
 
 export const AddPack: React.FC = () => {
 
-    const [newPackName, setNewPackName] = useState('');
+    const [packName, setPackName] = useState('');
 
     const dispatch = useAppDispatch();
 
     const handleChangeNewPack = (event: ChangeEvent<HTMLTextAreaElement>) => {
-        setNewPackName(event.target.value);
+        setPackName(event.target.value);
     };
     const handleAddNewCardsPack = () => {
-        dispatch(addCardsPackTC({ name: newPackName }))
+        dispatch(addCardsPackTC({ name: packName }))
     };
 
     return (
@@ -26,8 +26,8 @@ export const AddPack: React.FC = () => {
         }}>
             <TextField
                 size="small"
-                value={newPackName}
-                placeholder={"Enter a new name of card Pack"}
+                value={packName}
+                placeholder={"Enter name of card Pack"}
                 onChange={handleChangeNewPack}
             />
             <Button
