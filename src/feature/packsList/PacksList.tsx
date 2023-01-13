@@ -1,8 +1,7 @@
-import { Box, Button, Stack, TextField } from '@mui/material'
-import React, { ChangeEvent, useState } from 'react'
-import { addCardsPackTC} from 'redux/packs-reducer';
-import { useAppDispatch} from 'redux/store';
-import { AddPack } from './AddPack';
+import { Box, Stack } from '@mui/material'
+import React from 'react'
+import { AddNewPack } from './AddNewPack';
+import { OptionsComponents } from './OptionsComponents';
 import { PaginationComponent } from './PaginationComponent';
 import TablePacks from './TablePacks'
 
@@ -17,7 +16,8 @@ export const PacksList: React.FC = () => {
             mt: "60px",
             ml: "120px"
         }}>
-            <AddPack />
+            <AddNewPack />
+            <OptionsComponents />
             <TablePacks />
             <Stack spacing={2}
                 sx={{
