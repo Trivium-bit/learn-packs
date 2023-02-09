@@ -1,9 +1,9 @@
 import { Box, Stack } from '@mui/material'
 import React from 'react'
 import { AddNewPack } from './AddNewPack';
-import { OptionsComponents } from './OptionsComponents';
 import { PaginationComponent } from './PaginationComponent';
-import TablePacks from './TablePacks'
+import { SortOptions } from './SortOptions/SortOptions';
+import TablePacks from './TablePacks';
 
 export const PacksList: React.FC = () => {
 
@@ -17,7 +17,7 @@ export const PacksList: React.FC = () => {
             ml: "120px"
         }}>
             <AddNewPack />
-            <OptionsComponents />
+            <SortOptions />
             <TablePacks />
             <Stack spacing={2}
                 sx={{

@@ -40,7 +40,7 @@ export const packsReducer = (
     case "ADD_CARDS_PACK":
       return { ...state, cardPacks: [action.pack, ...state.cardPacks] }
     case "CHANGE_NAME_CARDS_PACK":
-      return {...state, packName: action.newPackName}
+      return { ...state, packName: action.name }
     default: {
       return state;
     }
@@ -56,8 +56,8 @@ export const setCurrentPageAC = (page: number) => ({
 export const addCardsPackAC = (pack: CardPacksType) => ({
   type: "ADD_CARDS_PACK", pack
 } as const);
-export const changeNameCardsPackAC = (newPackName: string) => ({
-  type: "CHANGE_NAME_CARDS_PACK", newPackName
+export const changeNameCardsPackAC = (_id: string, name: string) => ({
+  type: "CHANGE_NAME_CARDS_PACK", _id, name
 } as const);
 
 
@@ -96,11 +96,12 @@ export const deleteCardsPackTC = (_id: string) => async (dispatch: AppDispatch) 
     dispatch(setLoading(RequestStatus.error));
   }
 };
-export const changeNameCardsPackTC = (_id: string, newPackName: string) => async (dispatch: AppDispatch) => {
+export const changeNameCardsPackTC = (_id: string, name: string) => async (dispatch: AppDispatch) => {
   try {
     dispatch(setLoading(RequestStatus.loading));
-    await cardsPacksApi.changeNameCardsPack(_id, newPackName);
-    dispatch(changeNameCardsPackAC(newPackName));
+    await cardsPacksApi.changeNameCardsPack({ _id, name });
+    dispatch(changeNameCardsPackAC(_id, name));
+    dispatch(getCardsPacksTC());
     dispatch(setLoading(RequestStatus.succeeded));
   } catch (e) {
     dispatch(setError(e as string));

@@ -20,8 +20,8 @@ export const cardsPacksApi = {
   deleteCardsPack(_id: string) {
     return instance.delete<ResponseCardsPacksType>(`/cards/pack?id=${_id}`);
   },
-  changeNameCardsPack(_id: string, name: string) {
-    return instance.put<ResponseCardsPacksType>(`/cards/pack`, {_id, name});
+  changeNameCardsPack(cardsPack: {_id: string, name: string}) {
+    return instance.put<ResponseCardsPacksType>(`/cards/pack`, {cardsPack});
   },
 }
 
