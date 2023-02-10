@@ -8,6 +8,7 @@ type CardsPacksActionsType =
   | ReturnType<typeof setCurrentPageAC>
   | ReturnType<typeof addCardsPackAC>
   | ReturnType<typeof changeNameCardsPackAC>
+  | ReturnType<typeof findNameCardsPackAC>
 
 const initialState = {
   cardPacks: [] as Array<CardPacksType>,
@@ -41,6 +42,12 @@ export const packsReducer = (
       return { ...state, cardPacks: [action.pack, ...state.cardPacks] }
     case "CHANGE_NAME_CARDS_PACK":
       return { ...state, packName: action.name }
+    case "FIND_CARDS_PACK":
+      return {
+        ...state,
+        cardPacks: [...state.cardPacks].filter((cardPack) =>
+        cardPack.name?.toLowerCase().includes(action.packName.toLowerCase()))
+      }
     default: {
       return state;
     }
@@ -58,6 +65,9 @@ export const addCardsPackAC = (pack: CardPacksType) => ({
 } as const);
 export const changeNameCardsPackAC = (_id: string, name: string) => ({
   type: "CHANGE_NAME_CARDS_PACK", _id, name
+} as const);
+export const findNameCardsPackAC = (packName: string) => ({
+  type: "FIND_CARDS_PACK", packName
 } as const);
 
 
