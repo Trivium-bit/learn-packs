@@ -70,6 +70,10 @@ export const setIsInitialized = (isInitialized: boolean) => {
     return { type: 'APP/SET-IS-INITIALIZED', isInitialized } as const
 }
 
+export const SetInfoAC = (textInfo: string) => ({
+    type: "APP/SET-INFO", textInfo
+  } as const);
+
 export const initializeAppTC = () => async (dispatch: Dispatch) => {
     try {
         dispatch(setIsInitialized(false))

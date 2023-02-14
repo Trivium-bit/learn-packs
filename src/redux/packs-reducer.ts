@@ -18,7 +18,7 @@ const initialState = {
   sortPacks: '0updated',
   pageCount: 8,
   page: 1,
-  cardPacksTotalCount: 0
+  cardPacksTotalCount: 0,
 }
 
 type InitialStateType = typeof initialState
