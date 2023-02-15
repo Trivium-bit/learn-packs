@@ -1,32 +1,11 @@
 import { Box, TextField } from "@mui/material"
-import useDebounce from "components/UseDebounce/UseDebounce";
-import { ChangeEvent, useEffect, useState } from "react";
-import { SetInfoAC } from "redux/app-reducer";
-import { findNameCardsPackAC, getCardsPacksTC } from "redux/packs-reducer";
-import { useAppDispatch, useAppSelector } from "redux/store";
+import { useAppSelector } from "redux/store";
 import s from "./NameOptions.module.css";
+import { SearchPropsType } from "./SortOptions";
 
-export default function SearchPack() {
+export default function SearchPack({searchValue, searchHandler}: SearchPropsType) {
 
-    const cardPacks = useAppSelector((state) => state.packs.cardPacks)
-    const [searchValue, setSearchValue] = useState<string>('')
-    const debouncedValue = useDebounce<string>(searchValue, 200)
-
-    const dispatch = useAppDispatch();
-
-    const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-        setSearchValue(event.target.value)
-    }
-
-    useEffect(() => {
-        dispatch(findNameCardsPackAC(searchValue))
-        if (cardPacks.length < 0) {
-            dispatch(SetInfoAC("Колоды с введенным название не найдены. Измените параметры запроса"))
-        }
-        else if (searchValue === "") {
-            dispatch(getCardsPacksTC());
-        }
-    }, [debouncedValue, cardPacks, dispatch, searchValue])
+    const search = useAppSelector((state) => state.packs.search);
 
     return (
         <Box
@@ -38,8 +17,8 @@ export default function SearchPack() {
             <TextField
                 label="Search field"
                 size="small"
-                onChange={handleChange}
-                value={searchValue}
+                onChange={searchHandler}
+                value={search}
             />
         </Box>
     )

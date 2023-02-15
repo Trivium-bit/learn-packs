@@ -19,6 +19,7 @@ const initialState = {
   pageCount: 8,
   page: 1,
   cardPacksTotalCount: 0,
+  search: "",
 }
 
 type InitialStateType = typeof initialState
@@ -46,7 +47,7 @@ export const packsReducer = (
       return {
         ...state,
         cardPacks: [...state.cardPacks].filter((cardPack) =>
-        cardPack.name?.toLowerCase().includes(action.packName.toLowerCase()))
+        cardPack.search?.toLowerCase().includes(action.search.toLowerCase()))
       }
     default: {
       return state;
@@ -66,8 +67,8 @@ export const addCardsPackAC = (pack: CardPacksType) => ({
 export const changeNameCardsPackAC = (_id: string, name: string) => ({
   type: "CHANGE_NAME_CARDS_PACK", _id, name
 } as const);
-export const findNameCardsPackAC = (packName: string) => ({
-  type: "FIND_CARDS_PACK", packName
+export const findNameCardsPackAC = (search: string) => ({
+  type: "FIND_CARDS_PACK", search
 } as const);
 
 

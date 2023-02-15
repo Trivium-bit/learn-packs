@@ -1,5 +1,5 @@
 import { Pagination } from '@mui/material'
-import { getCardsPacksTC, setCurrentPageAC } from 'redux/packs-reducer';
+import { setCurrentPageAC } from 'redux/packs-reducer';
 import { useAppDispatch, useAppSelector } from 'redux/store'
 
 export const PaginationComponent: React.FC = () => {
@@ -11,7 +11,6 @@ export const PaginationComponent: React.FC = () => {
 
     const handleChangePagination = (event: React.ChangeEvent<unknown>, page: number) => {
         dispatch(setCurrentPageAC(page))
-        dispatch(getCardsPacksTC())
     }
 
     return (

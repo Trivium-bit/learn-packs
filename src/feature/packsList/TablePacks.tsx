@@ -10,8 +10,7 @@ import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'
 import ModeEditIcon from '@mui/icons-material/ModeEdit'
 import SchoolOutlinedIcon from '@mui/icons-material/SchoolOutlined'
 import { useAppDispatch, useAppSelector } from 'redux/store';
-import { deleteCardsPackTC, getCardsPacksTC, changeNameCardsPackTC } from 'redux/packs-reducer';
-import { useEffect } from 'react';
+import { deleteCardsPackTC, changeNameCardsPackTC } from 'redux/packs-reducer';
 import Modal from 'components/Modal/Modal';
 import { Button, TextField } from '@mui/material';
 
@@ -19,6 +18,7 @@ export default function TablePacks() {
 
   const [modalActive, setModalActive] = useState<boolean>(false);
   const [newPackName, setNewPackName] = useState('');
+
   const cardPacks = useAppSelector((state) => state.packs.cardPacks)
 
   const hoverStyleIcon = {
@@ -28,10 +28,6 @@ export default function TablePacks() {
   }
 
   const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    dispatch(getCardsPacksTC());
-  }, []);
 
   const onClickDeletePackHandler = (_id: string) => {
     dispatch(deleteCardsPackTC(_id))

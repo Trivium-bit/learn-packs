@@ -8,6 +8,7 @@ export type GetCardsPacksType = {
   page?: number
   pageCount?: number
   user_id?: string
+  search?: string
 }
 
 export const cardsPacksApi = {
@@ -48,6 +49,7 @@ export type CardPacksType = {
     updated: string;
     more_id: string;
     __v: number;
+    search?: string
   }
 
 export type ResponseCardsPacksType = {
