@@ -8,7 +8,7 @@ type CardsPacksActionsType =
   | ReturnType<typeof setCurrentPageAC>
   | ReturnType<typeof addCardsPackAC>
   | ReturnType<typeof changeNameCardsPackAC>
-  | ReturnType<typeof findNameCardsPackAC>
+  | ReturnType<typeof searchPacksAC>
 
 const initialState = {
   cardPacks: [] as Array<CardPacksType>,
@@ -43,11 +43,11 @@ export const packsReducer = (
       return { ...state, cardPacks: [action.pack, ...state.cardPacks] }
     case "CHANGE_NAME_CARDS_PACK":
       return { ...state, packName: action.name }
-    case "FIND_CARDS_PACK":
-      return {
+    case "SEARCH_CARDS_PACK":
+      return { 
         ...state,
         cardPacks: [...state.cardPacks].filter((cardPack) =>
-        cardPack.search?.toLowerCase().includes(action.search.toLowerCase()))
+        cardPack.name?.toLowerCase().includes(action.search.toLowerCase()))
       }
     default: {
       return state;
@@ -67,16 +67,16 @@ export const addCardsPackAC = (pack: CardPacksType) => ({
 export const changeNameCardsPackAC = (_id: string, name: string) => ({
   type: "CHANGE_NAME_CARDS_PACK", _id, name
 } as const);
-export const findNameCardsPackAC = (search: string) => ({
-  type: "FIND_CARDS_PACK", search
+export const searchPacksAC = (search: string) => ({
+  type: "SEARCH_CARDS_PACK", search
 } as const);
 
 
 export const getCardsPacksTC = () => async (dispatch: AppDispatch, getState: () => AppRootReducerType) => {
-  const { pageCount, packName, min, max, sortPacks, page } = getState().packs;
+  const { pageCount, packName, min, max, sortPacks, page, search} = getState().packs;
   try {
     dispatch(setLoading(RequestStatus.loading));
-    const res = await cardsPacksApi.getCardsPacks({ pageCount, packName, min, max, sortPacks, page });
+    const res = await cardsPacksApi.getCardsPacks({ pageCount, packName, min, max, sortPacks, page, search });
     const currentPagesCount = Math.ceil(res.data.cardPacksTotalCount / res.data.pageCount)
     dispatch(getCardsPacksAC(res.data.cardPacks, currentPagesCount, res.data.page));
     dispatch(setLoading(RequestStatus.succeeded));

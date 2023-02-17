@@ -1,15 +1,8 @@
 import { Box } from '@mui/material'
-import React, { ChangeEvent } from 'react'
 import { MyAllPacks } from './MyAllPacks'
-import SearchPack from './SearchPack'
+import SearchPack, { SearchPropsType } from './SearchPack'
 
-export type SearchPropsType = {
-   searchValue: string
-   searchHandler: (event: ChangeEvent<HTMLInputElement>) => void
-}
-
-
-export const SortOptions: React.FC<SearchPropsType> = ({searchValue, searchHandler}) => {
+export default function SortOptions(props: SearchPropsType) {
 
    return (
       <Box sx={{
@@ -19,7 +12,7 @@ export const SortOptions: React.FC<SearchPropsType> = ({searchValue, searchHandl
          alignItems: "center",
          mb: "24px"
       }}>
-         <SearchPack searchValue={searchValue} searchHandler={searchHandler}/>
+         <SearchPack searchHandler={props.searchHandler}/>
          <MyAllPacks />
       </Box>
    )

@@ -1,12 +1,13 @@
 import { Box, TextField } from "@mui/material"
-import { useAppSelector } from "redux/store";
+import { ChangeEvent } from "react";
 import s from "./NameOptions.module.css";
-import { SearchPropsType } from "./SortOptions";
 
-export default function SearchPack({searchValue, searchHandler}: SearchPropsType) {
+export type SearchPropsType = {
+    searchHandler: (e: ChangeEvent<HTMLInputElement>) => void
+}
 
-    const search = useAppSelector((state) => state.packs.search);
-
+export default function SearchPack(props: SearchPropsType) {
+    
     return (
         <Box
             sx={{
@@ -17,9 +18,9 @@ export default function SearchPack({searchValue, searchHandler}: SearchPropsType
             <TextField
                 label="Search field"
                 size="small"
-                onChange={searchHandler}
-                value={search}
+                onChange={props.searchHandler}
             />
         </Box>
     )
 }
+
