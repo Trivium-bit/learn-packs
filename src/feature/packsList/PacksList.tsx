@@ -1,4 +1,4 @@
-import { Box, Stack} from '@mui/material'
+import { Box, Stack } from '@mui/material'
 import useDebounce from 'components/UseDebounce/UseDebounce';
 import React, { ChangeEvent, useEffect, useState } from 'react'
 import { getCardsPacksTC, searchPacksAC } from 'redux/packs-reducer';
@@ -23,31 +23,31 @@ export const PacksList: React.FC = () => {
 
     useEffect(() => {
         if (searchValue === "") {
-        dispatch(getCardsPacksTC())
+            dispatch(getCardsPacksTC())
         } else {
             dispatch(searchPacksAC(searchValue))
         }
     }, [debouncedValue, search, page, pageCount, dispatch, searchValue]);
 
 
-return (
-    <Box sx={{
-        display: "flex",
-        justifyContent: "center",
-        width: '1280px',
-        flexDirection: 'column',
-        mt: "60px",
-        ml: "120px"
-    }}>
-        <AddNewPack />
-        <SortOptions searchHandler={searchHandler}/>
-        <TablePacks />
-        <Stack spacing={2}
-            sx={{
-                mt: "60px",
-            }}>
-            <PaginationComponent />
-        </Stack>
-    </Box>
-)
+    return (
+        <Box sx={{
+            display: "flex",
+            justifyContent: "center",
+            width: '1280px',
+            flexDirection: 'column',
+            mt: "60px",
+            ml: "120px"
+        }}>
+            <AddNewPack />
+            <SortOptions searchHandler={searchHandler} searchValue={searchValue} />
+            <TablePacks />
+            <Stack spacing={2}
+                sx={{
+                    mt: "60px",
+                }}>
+                <PaginationComponent />
+            </Stack>
+        </Box>
+    )
 }

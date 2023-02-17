@@ -4,9 +4,10 @@ import s from "./NameOptions.module.css";
 
 export type SearchPropsType = {
     searchHandler: (e: ChangeEvent<HTMLInputElement>) => void
+    searchValue: string
 }
 
-export default function SearchPack(props: SearchPropsType) {
+export default function SearchPack({searchHandler, searchValue}: SearchPropsType) {
     
     return (
         <Box
@@ -18,7 +19,8 @@ export default function SearchPack(props: SearchPropsType) {
             <TextField
                 label="Search field"
                 size="small"
-                onChange={props.searchHandler}
+                onChange={searchHandler}
+                value={searchValue}
             />
         </Box>
     )
