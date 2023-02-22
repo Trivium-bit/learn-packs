@@ -1,13 +1,8 @@
 import { Box, TextField } from "@mui/material"
-import { ChangeEvent } from "react";
 import s from "./NameOptions.module.css";
+import { SortOptionsPropsType } from "./SortOptions";
 
-export type SearchPropsType = {
-    searchHandler: (e: ChangeEvent<HTMLInputElement>) => void
-    searchValue: string
-}
-
-export default function SearchPack({searchHandler, searchValue}: SearchPropsType) {
+export default function SearchPack({searchHandler, searchValue}: SortOptionsPropsType) {
     
     return (
         <Box

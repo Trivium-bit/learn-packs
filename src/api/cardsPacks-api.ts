@@ -9,6 +9,7 @@ export type GetCardsPacksType = {
   pageCount?: number
   user_id?: string
   search?: string
+  isMyPacks?: boolean
 }
 
 export const cardsPacksApi = {

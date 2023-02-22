@@ -1,9 +1,15 @@
-import { Box, Slider } from '@mui/material'
-import { MyAllPacks } from './MyAllPacks'
+import { Box } from '@mui/material'
+import { ChangeEvent } from 'react'
+import MyAllPacks from './MyAllPacks'
 import RangeSlider from './RangeSlider'
-import SearchPack, { SearchPropsType } from './SearchPack'
+import SearchPack from './SearchPack'
 
-export default function SortOptions({ searchHandler, searchValue }: SearchPropsType) {
+export type SortOptionsPropsType = {
+   searchHandler?: (e: ChangeEvent<HTMLInputElement>) => void
+   searchValue?: string
+}
+
+export default function SortOptions({ searchHandler, searchValue }: SortOptionsPropsType) {
 
    return (
       <Box sx={{

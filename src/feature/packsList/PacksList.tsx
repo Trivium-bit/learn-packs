@@ -1,7 +1,7 @@
 import { Box, Stack } from '@mui/material'
 import useDebounce from 'components/UseDebounce/UseDebounce';
 import React, { ChangeEvent, useEffect, useState } from 'react'
-import { getCardsPacksTC, searchPacksAC } from 'redux/packs-reducer';
+import { getCardsPacksTC, isMyPacksAC, searchPacksAC } from 'redux/packs-reducer';
 import { useAppDispatch, useAppSelector } from 'redux/store';
 import { AddNewPack } from './AddNewPack';
 import { PaginationComponent } from './PaginationComponent';
@@ -16,6 +16,7 @@ export const PacksList: React.FC = () => {
     const debouncedValue = useDebounce<string>(searchValue, 200)
     const page = useAppSelector((state) => state.packs.page)
     const pageCount = useAppSelector((state) => state.packs.pageCount)
+    const isMyPacks = useAppSelector((state) => state.packs.isMyPacks)
 
     const searchHandler = (e: ChangeEvent<HTMLInputElement>) => {
         setSearchValue(e.target.value)
@@ -27,7 +28,7 @@ export const PacksList: React.FC = () => {
         } else {
             dispatch(searchPacksAC(searchValue))
         }
-    }, [debouncedValue, search, page, pageCount, dispatch, searchValue]);
+    }, [debouncedValue, search, page, pageCount, dispatch, searchValue, isMyPacks]);
 
 
     return (
@@ -40,7 +41,7 @@ export const PacksList: React.FC = () => {
             ml: "120px"
         }}>
             <AddNewPack />
-            <SortOptions searchHandler={searchHandler} searchValue={searchValue} />
+            <SortOptions searchHandler={searchHandler} searchValue={searchValue}/>
             <TablePacks />
             <Stack spacing={2}
                 sx={{

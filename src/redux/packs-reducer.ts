@@ -9,6 +9,8 @@ type CardsPacksActionsType =
   | ReturnType<typeof addCardsPackAC>
   | ReturnType<typeof changeNameCardsPackAC>
   | ReturnType<typeof searchPacksAC>
+  | ReturnType<typeof isMyPacksAC>
+  
 
 const initialState = {
   cardPacks: [] as Array<CardPacksType>,
@@ -20,6 +22,7 @@ const initialState = {
   page: 1,
   cardPacksTotalCount: 0,
   search: "",
+  isMyPacks: false
 }
 
 type InitialStateType = typeof initialState
@@ -44,11 +47,13 @@ export const packsReducer = (
     case "CHANGE_NAME_CARDS_PACK":
       return { ...state, packName: action.name }
     case "SEARCH_CARDS_PACK":
-      return { 
+      return {
         ...state,
         cardPacks: [...state.cardPacks].filter((cardPack) =>
-        cardPack.name?.toLowerCase().includes(action.search.toLowerCase()))
+          cardPack.name?.toLowerCase().includes(action.search.toLowerCase()))
       }
+    case "IS_MY_CARDS_PACK":
+      return { ...state, isMyPacks: action.isMyPacks }
     default: {
       return state;
     }
@@ -70,13 +75,16 @@ export const changeNameCardsPackAC = (_id: string, name: string) => ({
 export const searchPacksAC = (search: string) => ({
   type: "SEARCH_CARDS_PACK", search
 } as const);
+export const isMyPacksAC = (isMyPacks: boolean) => ({
+  type: "IS_MY_CARDS_PACK", isMyPacks
+} as const);
 
 
 export const getCardsPacksTC = () => async (dispatch: AppDispatch, getState: () => AppRootReducerType) => {
-  const { pageCount, packName, min, max, sortPacks, page, search} = getState().packs;
+  const { pageCount, packName, min, max, sortPacks, page, search, isMyPacks} = getState().packs;
   try {
     dispatch(setLoading(RequestStatus.loading));
-    const res = await cardsPacksApi.getCardsPacks({ pageCount, packName, min, max, sortPacks, page, search });
+    const res = await cardsPacksApi.getCardsPacks({ pageCount, packName, min, max, sortPacks, page, search, isMyPacks });
     const currentPagesCount = Math.ceil(res.data.cardPacksTotalCount / res.data.pageCount)
     dispatch(getCardsPacksAC(res.data.cardPacks, currentPagesCount, res.data.page));
     dispatch(setLoading(RequestStatus.succeeded));
