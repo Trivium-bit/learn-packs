@@ -1,5 +1,5 @@
 import { Dispatch } from 'redux'
-import { authApi } from 'api/auth-api'
+import { authApi, LoginResponseType } from 'api/auth-api'
 import { setIsLogin, setProfileData } from './auth-reducer'
 
 export enum RequestStatus {
@@ -24,6 +24,7 @@ const initialState = {
         info: null as string | null,
     },
     isInitialized: false,
+    user: {} as LoginResponseType
 }
 
 export const appReducer = (

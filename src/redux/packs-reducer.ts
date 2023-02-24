@@ -10,7 +10,7 @@ type CardsPacksActionsType =
   | ReturnType<typeof changeNameCardsPackAC>
   | ReturnType<typeof searchPacksAC>
   | ReturnType<typeof isMyPacksAC>
-  
+  | ReturnType<typeof setIsPrivateCardsAC>
 
 const initialState = {
   cardPacks: [] as Array<CardPacksType>,
@@ -22,7 +22,8 @@ const initialState = {
   page: 1,
   cardPacksTotalCount: 0,
   search: "",
-  isMyPacks: false
+  isMyPacks: false,
+  isPrivate: false,
 }
 
 type InitialStateType = typeof initialState
@@ -52,8 +53,10 @@ export const packsReducer = (
         cardPacks: [...state.cardPacks].filter((cardPack) =>
           cardPack.name?.toLowerCase().includes(action.search.toLowerCase()))
       }
-    case "IS_MY_CARDS_PACK":
+    case "SET_IS_MY_CARDS_PACK":
       return { ...state, isMyPacks: action.isMyPacks }
+    case "SET_IS_PRIVAT_CARDS":
+      return { ...state, isPrivate: action.isPrivate }
     default: {
       return state;
     }
@@ -76,15 +79,23 @@ export const searchPacksAC = (search: string) => ({
   type: "SEARCH_CARDS_PACK", search
 } as const);
 export const isMyPacksAC = (isMyPacks: boolean) => ({
-  type: "IS_MY_CARDS_PACK", isMyPacks
+  type: "SET_IS_MY_CARDS_PACK", isMyPacks
+} as const);
+export const setIsPrivateCardsAC = (isPrivate: boolean) => ({
+  type: "SET_IS_PRIVAT_CARDS", isPrivate
 } as const);
 
-
 export const getCardsPacksTC = () => async (dispatch: AppDispatch, getState: () => AppRootReducerType) => {
-  const { pageCount, packName, min, max, sortPacks, page, search, isMyPacks} = getState().packs;
+  const user_id = getState().app.user._id
+  const { pageCount, packName, min, max, sortPacks, page, search, isMyPacks } = getState().packs;
   try {
     dispatch(setLoading(RequestStatus.loading));
-    const res = await cardsPacksApi.getCardsPacks({ pageCount, packName, min, max, sortPacks, page, search, isMyPacks });
+
+    const res = await cardsPacksApi.getCardsPacks(isMyPacks
+      ? {user_id, page, pageCount, packName, min, max, sortPacks, search}
+      : {page, pageCount, packName, min, max, sortPacks, search})
+
+   //const res = await cardsPacksApi.getCardsPacks({ pageCount, packName, min, max, sortPacks, page, search, isMyPacks, user_id });
     const currentPagesCount = Math.ceil(res.data.cardPacksTotalCount / res.data.pageCount)
     dispatch(getCardsPacksAC(res.data.cardPacks, currentPagesCount, res.data.page));
     dispatch(setLoading(RequestStatus.succeeded));
