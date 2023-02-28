@@ -1,7 +1,7 @@
 import { Box, Stack } from '@mui/material'
 import useDebounce from 'components/UseDebounce/UseDebounce';
 import React, { ChangeEvent, useEffect, useState } from 'react'
-import { getCardsPacksTC, isMyPacksAC, searchPacksAC } from 'redux/packs-reducer';
+import { getCardsPacksTC, searchPacksAC } from 'redux/packs-reducer';
 import { useAppDispatch, useAppSelector } from 'redux/store';
 import { AddNewPack } from './AddNewPack';
 import { PaginationComponent } from './PaginationComponent';

@@ -99,6 +99,7 @@ export type LoginResponseType = ProfileDataType & {
 export type ProfileDataType = {
   email: string;
   name: string;
+  _id: string;
   avatar?: string;
 };
 

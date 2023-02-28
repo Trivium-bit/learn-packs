@@ -27,11 +27,6 @@ export const cardsPacksApi = {
   },
 }
 
-
-
-
-
-
 //==TYPES=========================================================================================
 
 export type CardPacksType = {
@@ -51,6 +46,7 @@ export type CardPacksType = {
     more_id: string;
     __v: number;
     search?: string
+
   }
 
 export type ResponseCardsPacksType = {

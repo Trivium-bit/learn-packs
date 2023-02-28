@@ -101,7 +101,7 @@ export default function TablePacks() {
                 <TableCell align="right">{row.Cards}</TableCell>
                 <TableCell align="right">{row.DateOfCreated}</TableCell>
                 <TableCell align="right">{row.CreatedBy}</TableCell>
-                <TableCell align="right">
+                <TableCell align="right" width={'100px'}>
                   {row.Actions.map((icon, i) => {
                     return (
                       <span style={{ padding: '3px' }} key={i}>

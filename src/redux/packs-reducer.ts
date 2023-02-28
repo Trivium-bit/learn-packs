@@ -1,7 +1,19 @@
 import { CardPackRequestType, CardPacksType, cardsPacksApi } from "api/cardsPacks-api";
 import { RequestStatus, setError, setLoading } from "./app-reducer";
 import { AppDispatch, AppRootReducerType } from "./store";
+import { Dispatch } from 'redux';
 
+export type PacksCardParamsType = {
+  packName?: string
+  min?: number
+  max?: number
+  sortPacks?: string
+  page?: number
+  pageCount?: number
+  user_id?: string
+  block?: boolean
+  isMyPacks?: boolean
+}
 
 type CardsPacksActionsType =
   | ReturnType<typeof getCardsPacksAC>
@@ -9,8 +21,7 @@ type CardsPacksActionsType =
   | ReturnType<typeof addCardsPackAC>
   | ReturnType<typeof changeNameCardsPackAC>
   | ReturnType<typeof searchPacksAC>
-  | ReturnType<typeof isMyPacksAC>
-  | ReturnType<typeof setIsPrivateCardsAC>
+  | ReturnType<typeof setIsMyTableAC>
 
 const initialState = {
   cardPacks: [] as Array<CardPacksType>,
@@ -23,7 +34,6 @@ const initialState = {
   cardPacksTotalCount: 0,
   search: "",
   isMyPacks: false,
-  isPrivate: false,
 }
 
 type InitialStateType = typeof initialState
@@ -53,10 +63,8 @@ export const packsReducer = (
         cardPacks: [...state.cardPacks].filter((cardPack) =>
           cardPack.name?.toLowerCase().includes(action.search.toLowerCase()))
       }
-    case "SET_IS_MY_CARDS_PACK":
+    case "SET_IS_MY_TABLE":
       return { ...state, isMyPacks: action.isMyPacks }
-    case "SET_IS_PRIVAT_CARDS":
-      return { ...state, isPrivate: action.isPrivate }
     default: {
       return state;
     }
@@ -78,24 +86,19 @@ export const changeNameCardsPackAC = (_id: string, name: string) => ({
 export const searchPacksAC = (search: string) => ({
   type: "SEARCH_CARDS_PACK", search
 } as const);
-export const isMyPacksAC = (isMyPacks: boolean) => ({
-  type: "SET_IS_MY_CARDS_PACK", isMyPacks
-} as const);
-export const setIsPrivateCardsAC = (isPrivate: boolean) => ({
-  type: "SET_IS_PRIVAT_CARDS", isPrivate
+export const setIsMyTableAC = (isMyPacks: boolean) => ({
+  type: "SET_IS_MY_TABLE", isMyPacks
 } as const);
 
-export const getCardsPacksTC = () => async (dispatch: AppDispatch, getState: () => AppRootReducerType) => {
-  const user_id = getState().app.user._id
-  const { pageCount, packName, min, max, sortPacks, page, search, isMyPacks } = getState().packs;
+export const getCardsPacksTC = () => async (dispatch: Dispatch, getState: () => AppRootReducerType) => {
+  const user_id = getState().auth.profileData._id
+  const { pageCount, packName, min, max, sortPacks, page, isMyPacks} = getState().packs;
   try {
+    debugger
     dispatch(setLoading(RequestStatus.loading));
-
     const res = await cardsPacksApi.getCardsPacks(isMyPacks
-      ? {user_id, page, pageCount, packName, min, max, sortPacks, search}
-      : {page, pageCount, packName, min, max, sortPacks, search})
-
-   //const res = await cardsPacksApi.getCardsPacks({ pageCount, packName, min, max, sortPacks, page, search, isMyPacks, user_id });
+        ? {user_id, page, pageCount, packName, min, max, sortPacks}
+        : {page, pageCount, packName, min, max, sortPacks})
     const currentPagesCount = Math.ceil(res.data.cardPacksTotalCount / res.data.pageCount)
     dispatch(getCardsPacksAC(res.data.cardPacks, currentPagesCount, res.data.page));
     dispatch(setLoading(RequestStatus.succeeded));
@@ -103,7 +106,7 @@ export const getCardsPacksTC = () => async (dispatch: AppDispatch, getState: () 
     dispatch(setError(e as string));
     dispatch(setLoading(RequestStatus.error));
   }
-};
+}
 export const addCardsPackTC = (pack: CardPackRequestType) => async (dispatch: AppDispatch) => {
   try {
     dispatch(setLoading(RequestStatus.loading));

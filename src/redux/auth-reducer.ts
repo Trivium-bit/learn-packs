@@ -27,7 +27,7 @@ const initialState = {
   verificationEmail: false,
   password: "",
   passChanged: "",
-  profileData: { email: "", name: "" } as ProfileDataType, // avatar: undefined
+  profileData: { email: "", name: "" , _id: ""} as ProfileDataType, // avatar: undefined
 };
 
 export const authReducer = (

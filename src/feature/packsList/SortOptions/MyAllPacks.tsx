@@ -1,23 +1,23 @@
 import { Box, Button } from '@mui/material'
-import { isMyPacksAC } from 'redux/packs-reducer';
-import { useAppDispatch, useAppSelector } from 'redux/store';
+import { setIsMyTableAC } from 'redux/packs-reducer';
+import { useAppDispatch } from 'redux/store';
 import s from "./NameOptions.module.css";
-import { SortOptionsPropsType } from './SortOptions';
 
 export default function MyAllPacks() {
 
-    const isMyPacks = useAppSelector((state) => state.packs.isMyPacks)
-    
     const dispatch = useAppDispatch();
-    const onClickChangeMyAllPackName = () => {
-        dispatch(isMyPacksAC(!isMyPacks))
-    };
 
+    const onClickChangeMyPackName = () => {
+        dispatch(setIsMyTableAC(true))
+    };
+    const onClickChangeAllPackName = () => {
+        dispatch(setIsMyTableAC(false))
+    };
     return (
         <Box>
             <Box className={s.titleName}>Shop packs cards</Box>
-            <Button variant="contained" onClick={onClickChangeMyAllPackName}>My</Button>
-            <Button variant="contained">All</Button>
+            <Button variant="contained" onClick={onClickChangeMyPackName}>My</Button>
+            <Button variant="contained" onClick={onClickChangeAllPackName}>All</Button>
         </Box>
     )
 }

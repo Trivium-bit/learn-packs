@@ -15,8 +15,9 @@ export const parseLoginResponse = ({
     name,
     avatar,
     error,
+    _id,
 }: LoginResponseType): Promise<ProfileDataType> =>
-    error ? Promise.reject(error) : Promise.resolve({ email, name, avatar })
+    error ? Promise.reject(error) : Promise.resolve({ email, name, _id, avatar })
 
 export const parseUpdatedUserResponse = ({
     updatedUser,
@@ -31,6 +32,7 @@ export const parseUpdatedUserResponse = ({
               email: updatedUser.email,
               name: updatedUser.name,
               avatar: updatedUser.avatar,
+              _id: updatedUser._id
           })
 }
 
