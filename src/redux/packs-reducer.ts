@@ -22,12 +22,15 @@ type CardsPacksActionsType =
   | ReturnType<typeof changeNameCardsPackAC>
   | ReturnType<typeof searchPacksAC>
   | ReturnType<typeof setIsMyTableAC>
-
+  | ReturnType<typeof setPackCardsCountAC>
+  
 const initialState = {
   cardPacks: [] as Array<CardPacksType>,
   packName: '',
+  maxCardsCount: 0,
+  minCardsCount: 0,
   min: 0,
-  max: 111,
+  max: 120,
   sortPacks: '0updated',
   pageCount: 8,
   page: 1,
@@ -65,6 +68,8 @@ export const packsReducer = (
       }
     case "SET_IS_MY_TABLE":
       return { ...state, isMyPacks: action.isMyPacks }
+    case "SET_PACK_CARD_COUNT":
+      return { ...state, min: action.min, max: action.max }
     default: {
       return state;
     }
@@ -89,16 +94,21 @@ export const searchPacksAC = (search: string) => ({
 export const setIsMyTableAC = (isMyPacks: boolean) => ({
   type: "SET_IS_MY_TABLE", isMyPacks
 } as const);
+export const setPackCardsCountAC = (min: number, max: number) => ({
+  type: "SET_PACK_CARD_COUNT", min, max
+} as const);
+
+
 
 export const getCardsPacksTC = () => async (dispatch: Dispatch, getState: () => AppRootReducerType) => {
   const user_id = getState().auth.profileData._id
-  const { pageCount, packName, min, max, sortPacks, page, isMyPacks} = getState().packs;
+  const { pageCount, packName, min, max, sortPacks, page, isMyPacks } = getState().packs;
   try {
     debugger
     dispatch(setLoading(RequestStatus.loading));
     const res = await cardsPacksApi.getCardsPacks(isMyPacks
-        ? {user_id, page, pageCount, packName, min, max, sortPacks}
-        : {page, pageCount, packName, min, max, sortPacks})
+      ? { user_id, page, pageCount, packName, min, max, sortPacks }
+      : { page, pageCount, packName, min, max, sortPacks })
     const currentPagesCount = Math.ceil(res.data.cardPacksTotalCount / res.data.pageCount)
     dispatch(getCardsPacksAC(res.data.cardPacks, currentPagesCount, res.data.page));
     dispatch(setLoading(RequestStatus.succeeded));

@@ -1,7 +1,7 @@
 import { Box } from '@mui/material'
 import { ChangeEvent } from 'react'
 import MyAllPacks from './MyAllPacks'
-import RangeSlider from './RangeSlider'
+import { RangeSlider } from './RangeSlider'
 import SearchPack from './SearchPack'
 
 export type SortOptionsPropsType = {

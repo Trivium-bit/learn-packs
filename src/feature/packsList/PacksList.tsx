@@ -17,6 +17,8 @@ export const PacksList: React.FC = () => {
     const page = useAppSelector((state) => state.packs.page)
     const pageCount = useAppSelector((state) => state.packs.pageCount)
     const isMyPacks = useAppSelector((state) => state.packs.isMyPacks)
+    const max = useAppSelector((state) => state.packs.max)
+    const min = useAppSelector((state) => state.packs.min)
 
     const searchHandler = (e: ChangeEvent<HTMLInputElement>) => {
         setSearchValue(e.target.value)
@@ -28,7 +30,7 @@ export const PacksList: React.FC = () => {
         } else {
             dispatch(searchPacksAC(searchValue))
         }
-    }, [debouncedValue, search, page, pageCount, dispatch, searchValue, isMyPacks]);
+    }, [debouncedValue, search, page, pageCount, dispatch, searchValue, isMyPacks, min, max]);
 
 
     return (
