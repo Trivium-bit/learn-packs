@@ -3,28 +3,22 @@ import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
 import { Slider } from '@mui/material'
 import { useAppDispatch, useAppSelector } from 'redux/store'
-import { useDebounce } from 'use-debounce'
 import { setPackCardsCountAC } from 'redux/packs-reducer'
+import useDebounce from 'components/UseDebounce/UseDebounce'
 
 
 export const RangeSlider = () => {
-    const minCountCards = useAppSelector((state) => state.packs.minCardsCount)
-    const maxCountCards = useAppSelector((state) => state.packs.maxCardsCount)
     const max = useAppSelector((state) => state.packs.max)
     const min = useAppSelector((state) => state.packs.min)
 
     const dispatch = useAppDispatch()
 
     const [value, setValue] = useState<Array<number>>([min, max])
-    const debouncedValue = useDebounce<Array<number>>(value, 500)
+    const debouncedValue = useDebounce<Array<number>>(value, 200)
 
     useEffect(() => {
         setValue([min, max])
     }, [max, min])
-
-    useEffect(() => {
-        dispatch(setPackCardsCountAC(minCountCards, maxCountCards))
-    }, [maxCountCards, minCountCards])
 
     useEffect(() => {
         dispatch(setPackCardsCountAC(value[0], value[1]))
@@ -76,8 +70,6 @@ export const RangeSlider = () => {
                         value={[value[0], value[1]]}
                         onChange={handleChange}
                         valueLabelDisplay="off"
-                        min={minCountCards}
-                        max={maxCountCards}
                     />
                     <Box
                         sx={{

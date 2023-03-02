@@ -27,8 +27,6 @@ type CardsPacksActionsType =
 const initialState = {
   cardPacks: [] as Array<CardPacksType>,
   packName: '',
-  maxCardsCount: 0,
-  minCardsCount: 0,
   min: 0,
   max: 120,
   sortPacks: '0updated',
@@ -104,7 +102,6 @@ export const getCardsPacksTC = () => async (dispatch: Dispatch, getState: () => 
   const user_id = getState().auth.profileData._id
   const { pageCount, packName, min, max, sortPacks, page, isMyPacks } = getState().packs;
   try {
-    debugger
     dispatch(setLoading(RequestStatus.loading));
     const res = await cardsPacksApi.getCardsPacks(isMyPacks
       ? { user_id, page, pageCount, packName, min, max, sortPacks }
